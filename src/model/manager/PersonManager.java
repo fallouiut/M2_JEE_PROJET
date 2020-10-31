@@ -1,5 +1,7 @@
 package model.manager;
 
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.EJB;
@@ -10,6 +12,8 @@ import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
+import model.Person;
 
 @Stateless(name = "personManager")
 @TransactionManagement(TransactionManagementType.CONTAINER)
@@ -34,6 +38,25 @@ public class PersonManager {
     @PreDestroy
     public void post() {
     	System.out.println(/*"\u001B[36m" + */"Destructing: '" + this + "'" + "\u001B[0m");
+    }
+    
+    public void savePerson(Person p) {
+    	if(p != null) {
+    		em.persist(p);
+    	}
+    }
+    /*
+    public List<Person> findAllPersons() {
+    	List<Person> persons;
+    	persons = em.find
+    	return persons
+    }
+    */
+    public Person findPerson(String id) {
+    	
+    	Person p = em.find(Person.class, id);
+    	
+    	return p;
     }
 
 }
