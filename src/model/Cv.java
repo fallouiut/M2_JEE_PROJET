@@ -2,11 +2,17 @@ package model;
 
 import java.io.Serializable;
 
+
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -18,15 +24,20 @@ public class Cv implements Serializable{
 	
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @Column(name="cv_id")
-    int id;
+    @Id()
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
     
     @ManyToOne
     @JoinColumn(name = "p_mail", nullable = true)
     private Person owner;
-    	
-    @OneToMany(mappedBy = "cvOwner")
+    
+    /*
+    @ManyToOne
+    @JoinColumn(name = "p_mail")
+    private Person owner;
+    	/*
+    @OneToMany(mappedBy = "cvOwner", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Activite> listeActivites;
 	
 	
@@ -36,5 +47,13 @@ public class Cv implements Serializable{
 	
 	public void addActivite(Activite activite) {
 		this.listeActivites.add(activite);
+	}
+*/
+	public Person getOwner() {
+		return owner;
+	}
+
+	public void setOwner(Person owner) {
+		this.owner = owner;
 	}
 }

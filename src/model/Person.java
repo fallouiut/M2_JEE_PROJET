@@ -3,12 +3,15 @@ package model;
 
 import java.io.Serializable;
 
+
 import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Table;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -28,8 +31,6 @@ public class Person implements Serializable {
     private String prenom;
     
     @Id()
-	@Basic()
-	@Column(name = "p_mail", length = 200)
 	private String mail;
    
 	@Basic()
@@ -44,9 +45,21 @@ public class Person implements Serializable {
 	@Column(name = "p_motdepasse", length = 200)
     private String motdepasse;
     
-
+/*
+	@OneToMany(mappedBy= "owner", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@Column(nullable = true)
+    private List<Cv> cvs;
+*/
 	@OneToMany(mappedBy= "owner")
     private List<Cv> cvs;
+	
+	public void addCv(Cv cv) {
+		this.cvs.add(cv);
+	}
+	
+	public List<Cv> getCvs() {
+		return this.cvs;
+	}
 
     public String getName() {
         return name;

@@ -13,6 +13,7 @@ import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import model.Cv;
 import model.Person;
 
 @Stateless(name = "personManager")
@@ -40,12 +41,33 @@ public class PersonManager {
     	System.out.println(/*"\u001B[36m" + */"Destructing: '" + this + "'" + "\u001B[0m");
     }
     
-    public void savePerson(Person p) {
+    public void addPerson(Person p) {
     	if(p != null) {
     		em.persist(p);
+    		em.flush();
     	}
     }
-    /*
+    
+    public void updatePerson(Person p) {
+    	if(p != null) {
+    		em.merge(p);
+    	}
+    }
+    
+    public void addCv(Cv cv) {
+    	if(cv != null) {
+    		em.persist(cv);
+    	}
+    }
+    
+    /*	    this.login = "";
+	    if (login.equals(pwd)) {
+	        this.login = login;
+	        System.out.printf("Conexion reussie");
+	        connexion= true;
+	    
+	    }
+	}
     public List<Person> findAllPersons() {
     	List<Person> persons;
     	persons = em.find

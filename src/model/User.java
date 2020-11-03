@@ -11,6 +11,11 @@ public class User {
 
     public boolean connexion= false;
     
+    public String getLogin() {
+    	return this.login;
+    }
+    
+    public void setPerson(Person p) {}
     
     @PostConstruct
     public void debut() {
@@ -19,15 +24,14 @@ public class User {
     }
     
     public void login(String login, String pwd) {
-    this.login = "";
-    if (login.equals(pwd)) {
-        this.login = login;
-        System.out.printf("Conexion reussie");
-        connexion= true;
-    
-    }
-}
-    
+	    this.login = "";
+	    if (login.equals(pwd)) {
+	        this.login = login;
+	        System.out.printf("Conexion reussie");
+	        connexion= true;
+	    
+	    }
+	}
     
     @Remove
     public void logout() {
@@ -36,6 +40,4 @@ public class User {
         connexion = false;
         
     }
-
-	
 }
