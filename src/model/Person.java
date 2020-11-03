@@ -12,9 +12,15 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Table;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+
+@NamedQuery(name = "findAllPersons", query = "SELECT p FROM Person p")
+
 
 @Entity()
 @Table(name = "table_person")
@@ -22,15 +28,21 @@ public class Person implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Id()
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "p_id")
+    private long id;
+    
     @Basic()
-	@Column(name = "p_name", length = 200, nullable = false, unique = true)
+	@Column(name = "p_name", length = 200, nullable = false)
     private String name;
 	
 	@Basic()
-	@Column(name = "p_prenom", length = 200, nullable = false, unique = true)
+	@Column(name = "p_prenom", length = 200, nullable = false)
     private String prenom;
     
-    @Id()
+	@Basic()
+    @Column(name = "p_mail", unique = true)
 	private String mail;
    
 	@Basic()
@@ -44,23 +56,21 @@ public class Person implements Serializable {
 	@Basic()
 	@Column(name = "p_motdepasse", length = 200)
     private String motdepasse;
-    
 /*
 	@OneToMany(mappedBy= "owner", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@Column(nullable = true)
-    private List<Cv> cvs;
-*/
+    private List<CV> cvs;
+
 	@OneToMany(mappedBy= "owner")
     private List<Cv> cvs;
 	
-	public void addCv(Cv cv) {
+	public void addCv(CV cv) {
 		this.cvs.add(cv);
 	}
 	
-	public List<Cv> getCvs() {
+	public List<CV> getCvs() {
 		return this.cvs;
 	}
-
+	*/
     public String getName() {
         return name;
     }
@@ -109,5 +119,10 @@ public class Person implements Serializable {
     public void setMotPasse(String motdepasse) {
         this.motdepasse = motdepasse;
     }
-    
+
+	@Override
+	public String toString() {
+		return "Person [name=" + name + ", prenom=" + prenom + ", mail=" + mail + ", siteWeb=" + siteWeb
+				+ ", naissance=" + naissance + ", motdepasse=" + motdepasse + "]";
+	}
 }

@@ -2,6 +2,7 @@ package model.manager;
 
 import java.util.List;
 
+
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.EJB;
@@ -12,8 +13,8 @@ import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
-import model.Cv;
 import model.Person;
 
 @Stateless(name = "personManager")
@@ -54,12 +55,6 @@ public class PersonManager {
     	}
     }
     
-    public void addCv(Cv cv) {
-    	if(cv != null) {
-    		em.persist(cv);
-    	}
-    }
-    
     /*	    this.login = "";
 	    if (login.equals(pwd)) {
 	        this.login = login;
@@ -74,7 +69,15 @@ public class PersonManager {
     	return persons
     }
     */
-    public Person findPerson(String id) {
+    
+    public List<Person> findAllPersons() {
+			TypedQuery<Person> q = em.createNamedQuery("findAllPersons", Person.class);
+			// exécution et récupération du résultat
+			List<Person> result = q.getResultList();
+			return result;
+    }
+    
+    public Person findPerson(long id) {
     	
     	Person p = em.find(Person.class, id);
     	
