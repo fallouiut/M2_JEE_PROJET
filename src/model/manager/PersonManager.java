@@ -70,6 +70,16 @@ public class PersonManager {
     }
     */
     
+    public Person findPersonByEmail(String email) {
+        String query = "SELECT p FROM Person p WHERE p.mail = :pattern";
+
+        TypedQuery<Person> q = em.createQuery(query, Person.class);
+        Person p = null;
+        p = q.setParameter("pattern", email).getSingleResult();
+        return p;
+        
+    }
+    
     public List<Person> findAllPersons() {
 			TypedQuery<Person> q = em.createNamedQuery("findAllPersons", Person.class);
 			// exécution et récupération du résultat

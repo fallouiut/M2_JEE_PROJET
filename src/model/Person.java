@@ -3,7 +3,6 @@ package model;
 
 import java.io.Serializable;
 
-
 import java.util.Date;
 import java.util.List;
 
@@ -20,7 +19,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 @NamedQuery(name = "findAllPersons", query = "SELECT p FROM Person p")
-
 
 @Entity()
 @Table(name = "table_person")
@@ -56,13 +54,13 @@ public class Person implements Serializable {
 	@Basic()
 	@Column(name = "p_motdepasse", length = 200)
     private String motdepasse;
-/*
+
 	@OneToMany(mappedBy= "owner", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<CV> cvs;
-
+/*
 	@OneToMany(mappedBy= "owner")
     private List<Cv> cvs;
-	
+	*/
 	public void addCv(CV cv) {
 		this.cvs.add(cv);
 	}
@@ -70,7 +68,7 @@ public class Person implements Serializable {
 	public List<CV> getCvs() {
 		return this.cvs;
 	}
-	*/
+	
     public String getName() {
         return name;
     }
@@ -101,7 +99,6 @@ public class Person implements Serializable {
 
     public void setWeb(String siteWeb) {
         this.siteWeb = siteWeb;
-        
     }
     
     public Date getNaissance() {

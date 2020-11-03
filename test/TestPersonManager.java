@@ -12,6 +12,7 @@ import javax.inject.Inject;
 
 import org.junit.jupiter.api.Test;
 
+import model.CV;
 import model.Person;
 import model.User;
 import model.manager.PersonManager;
@@ -67,27 +68,46 @@ public class TestPersonManager extends BaseJunit5 {
 		Person p = pm.findPerson(50);
 		assertNull(p);
 	}
-*/
+
 	@Test
 	public void testAddingCv() {
-		Person p = pm.findPerson("fallou.seye@etu.univ-amu.fr");
+		Person p = pm.findPersonByEmail("fallou-du-13@gmail.com");
 		assertNotNull(p);
-		Cv cv = new Cv();
+		CV cv = new CV();
+	}
 
-		p.addCv(cv);		
+	@Test
+	public void testFindAll() {
+		List<Person> persons = pm.findAllPersons();
+		assertNotNull(persons);
+		
+		assertTrue(persons.size() >= 2);
+		
+	}
+	
+	@Test
+	public void testAddingCv() {
+		Person p = pm.findPersonByEmail("fallou-du-13@gmail.com");
+		
+		CV cv = new CV();
+		p.addCv(cv);
+		
 		pm.updatePerson(p);
 	}
-	/*
-	@Test
-	public void testGetCv() {
-		Person p = pm.findPerson("fallou.seye@etu.univ-amu.fr");
-		
-		List<Cv> cvs = p.getCvs();
-
-		System.out.println("-------------------------");
-		System.out.println("Taille cvs: " + cvs.size());
-		
-		assertTrue(cvs.size() > 0);
-	}
 	*/
+	
+	@Test
+	public void getCvAfterPerson() {
+		Person p = pm.findPersonByEmail("fallou-du-13@gmail.com");
+		
+		assertNotNull(p.getCvs());
+		System.out.println("P cv size: " + p.getCvs().size());
+		
+		for(CV cv: p.getCvs()) {
+			System.out.println("CV: " + cv);
+		}
+		
+		assertTrue(p.getCvs().get(0) != null);
+	}
+	
 }
