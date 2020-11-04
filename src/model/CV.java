@@ -16,6 +16,7 @@ import javax.validation.constraints.NotNull;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Table(name = "table_cv")
 @Entity()
@@ -32,20 +33,18 @@ public class CV implements Serializable {
     @JoinColumn(name = "p_id", nullable = true)
     private Person owner;
     
-    /*
-    @ManyToOne
-    @JoinColumn(name = "p_mail")
-    private Person owner;
-    	/*
-    @OneToMany(mappedBy = "cvOwner", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	private List<Activite> listeActivites;
-	
-	
-@@ -37,4 +48,12 @@
+	@OneToMany(mappedBy= "cvOwner", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Activite> activites;
+    
 	public void addActivite(Activite activite) {
-		this.listeActivites.add(activite);
+		this.activites.add(activite);
+		activite.setCvOwner(this);
 	}
-*/
+	
+	public List<Activite> getActivites() {
+		return this.activites;
+	}
+
 	public Person getOwner() {
 		return owner;
 	}

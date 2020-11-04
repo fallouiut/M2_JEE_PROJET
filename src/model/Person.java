@@ -63,6 +63,7 @@ public class Person implements Serializable {
 	*/
 	public void addCv(CV cv) {
 		this.cvs.add(cv);
+		cv.setOwner(this);
 	}
 	
 	public List<CV> getCvs() {

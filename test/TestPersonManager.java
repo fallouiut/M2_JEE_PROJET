@@ -12,6 +12,7 @@ import javax.inject.Inject;
 
 import org.junit.jupiter.api.Test;
 
+import model.Activite;
 import model.CV;
 import model.Person;
 import model.User;
@@ -87,18 +88,17 @@ public class TestPersonManager extends BaseJunit5 {
 	
 	@Test
 	public void testAddingCv() {
-		Person p = pm.findPersonByEmail("fallou-du-13@gmail.com");
+		Person p = pm.findPersonByEmail("fallou.seye@outlook.com");
 		
 		CV cv = new CV();
 		p.addCv(cv);
 		
 		pm.updatePerson(p);
 	}
-	*/
 	
 	@Test
 	public void getCvAfterPerson() {
-		Person p = pm.findPersonByEmail("fallou-du-13@gmail.com");
+		Person p = pm.findPersonByEmail("fallou.seye@outlook.com");
 		
 		assertNotNull(p.getCvs());
 		System.out.println("P cv size: " + p.getCvs().size());
@@ -107,7 +107,36 @@ public class TestPersonManager extends BaseJunit5 {
 			System.out.println("CV: " + cv);
 		}
 		
-		assertTrue(p.getCvs().get(0) != null);
+		assertTrue(p.getCvs().size() > 1);
+	}
+	
+	@Test
+	public void testAddActivite() {
+		Person p = pm.findPersonByEmail("fallou.seye@outlook.com");
+		
+		CV cv = p.getCvs().get(0);
+		
+		Activite ac = new Activite();
+		ac.setAnnee("2020");
+		ac.setAutre("autre");
+		ac.setDescriptif("Descriptif");
+		ac.setExperience("Experience");
+		ac.setFormation("Formation");
+		
+		cv.addActivite(ac);
+		
+		pm.updatePerson(p);
+		
+	}
+	*/
+	
+	@Test
+	public void testGetBackCv() {
+
+		Person p = pm.findPersonByEmail("fallou.seye@outlook.com");
+		CV cv = p.getCvs().get(0);
+		
+		assertTrue(cv.getActivites().get(0) != null);
 	}
 	
 }
